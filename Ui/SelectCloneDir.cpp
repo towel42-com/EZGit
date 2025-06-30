@@ -3,9 +3,9 @@
 // All rights reserved.
 //
 
-#include "SelectSandBox.h"
+#include "SelectCloneDir.h"
 
-#include "ui_SelectSandBox.h"
+#include "ui_SelectCloneDir.h"
 
 #include "UiFwd.h"
 
@@ -15,13 +15,13 @@
 
 namespace NUi
 {
-    CSelectSandBox::CSelectSandBox( QWidget *parent ) :
+    CSelectCloneDir::CSelectCloneDir( QWidget *parent ) :
         CBasePage( parent ),
-        fImpl( new Ui::CSelectSandBox )
+        fImpl( new Ui::CSelectCloneDir )
     {
         fImpl->setupUi( this );
         registerField( QString( SANDBOX_FIELD ), fImpl->sandBox );
-        registerField( QString( REPO_DIR_FIELD ) + "*", fImpl->repoDir );
+        registerField( QString( SANDBOX_REPO_DIR_FIELD ) + "*", fImpl->repoDir );
 
         connect(
             fImpl->selectSandBox, &QToolButton::clicked,   //
@@ -33,14 +33,14 @@ namespace NUi
 
                 fImpl->sandBox->setText( sandBox );
             } );
-        connect( fImpl->sandBox, &QLineEdit::textChanged, this, &CSelectSandBox::slotUpdateRepoDir );
+        connect( fImpl->sandBox, &QLineEdit::textChanged, this, &CSelectCloneDir::slotUpdateRepoDir );
     }
 
-    CSelectSandBox::~CSelectSandBox()
+    CSelectCloneDir::~CSelectCloneDir()
     {
     }
 
-    void CSelectSandBox::slotUpdateRepoDir()
+    void CSelectCloneDir::slotUpdateRepoDir()
     {
         fImpl->repoDir->clear();
         if ( fImpl->sandBox->text().isEmpty() )
@@ -58,12 +58,12 @@ namespace NUi
         fImpl->repoDir->setText( path );
     }
 
-    void CSelectSandBox::initializePage()
+    void CSelectCloneDir::initializePage()
     {
         slotUpdateRepoDir();
     }
 
-    int CSelectSandBox::nextId() const
+    int CSelectCloneDir::nextId() const
     {
         return static_cast< int >( EPageID::eSummary );
     }

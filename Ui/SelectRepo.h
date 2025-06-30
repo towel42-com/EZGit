@@ -19,6 +19,8 @@ namespace NUi
         explicit CSelectRepo( QWidget *parent = nullptr );
         ~CSelectRepo();
 
+        virtual int nextId() const override;
+
     private Q_SLOTS:
     private:
 

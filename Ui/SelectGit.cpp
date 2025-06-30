@@ -4,7 +4,6 @@
 //
 
 #include "SelectGit.h"
-#include "UrlValidator.h"
 
 #include "ui_SelectGit.h"
 
@@ -23,7 +22,7 @@ namespace NUi
         fImpl->setupUi( this );
 
         registerField( QString( GIT_EXEC_FIELD ) + "*", fImpl->git );
-        registerField( QString( SHOW_SELECT_GIT_FIELD ) + "*", fImpl->showNextTme );
+        registerField( QString( SHOW_SELECT_GIT_FIELD ), fImpl->showNextTme );
 
         connect( fImpl->git, &QLineEdit::textChanged, this, &CSelectGit::completeChanged );
 
@@ -65,4 +64,11 @@ namespace NUi
         return fi.exists() && fi.isFile() && fi.isExecutable();
     }
 
+    int CSelectGit::nextId() const
+    {
+        if ( field( SHOW_SELECT_REPO_FIELD ).toBool() )
+            return static_cast< int >( EPageID::eSelectRepo );
+        else
+            return static_cast< int >( EPageID::eSelectGoal );
+    }
 }

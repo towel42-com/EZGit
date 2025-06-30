@@ -20,6 +20,7 @@ namespace NUi
         ~CSelectBranch();
 
         virtual void initializePage() override;
+        virtual int nextId() const override;
 
     public:
         void loadBranches();

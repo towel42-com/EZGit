@@ -4,7 +4,6 @@
 //
 
 #include "SelectGoal.h"
-#include "UrlValidator.h"
 
 #include "ui_SelectGoal.h"
 #include "UiFwd.h"
@@ -43,7 +42,7 @@ namespace NUi
         }
         else // if ( field( PULL_GOAL_FIELD ).toBool() || field( PUSH_GOAL_FIELD ).toBool() )
         {
-            nextPage = EPageID::eSelectSandBox;
+            nextPage = EPageID::eSelectRepoDir;
         }
 
 

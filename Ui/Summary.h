@@ -20,6 +20,7 @@ namespace NUi
         ~CSummary();
 
         virtual void initializePage() override;
+        virtual int nextId() const override;
 
     private Q_SLOTS:
     private:

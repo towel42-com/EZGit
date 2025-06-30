@@ -9,12 +9,18 @@ namespace NUi
         eSelectRepo,
         eSelectGoal,
         eSelectBranch,
-        eSelectSandBox,
-        eSummary
+        eSelectCloneDir,
+        eSelectRepoDir,
+        eEnterComment,
+        eSummary,
+        eRunGit
     };
 
     extern const char *SHOW_SELECT_GIT_FIELD;
     extern const char *SHOW_SELECT_GIT_SETTING;
+
+    extern const char *SHOW_SELECT_REPO_FIELD;
+    extern const char *SHOW_SELECT_REPO_SETTING;
 
     extern const char *GIT_EXEC_FIELD;
     extern const char *GIT_EXEC_SETTING;
@@ -32,6 +38,11 @@ namespace NUi
     extern const char *SANDBOX_SETTING;
 
     extern const char *REPO_DIR_FIELD;
+    extern const char *SANDBOX_REPO_DIR_FIELD;
+
+    extern const char *REPO_DIR_SETTING;
+
+    extern const char *COMMENT_FIELD;
 }
 
 #endif

@@ -4,22 +4,28 @@ set(FOLDER_NAME libs)
 find_package(Qt6 REQUIRED COMPONENTS SerialPort Network Bluetooth Svg )
 
 set(qtproject_UIS
+    EnterComment.ui
+    RunGit.ui
+    SelectCloneDir.ui
     SelectGit.ui
     SelectGoal.ui
     SelectRepo.ui
     SelectBranch.ui
-    SelectSandBox.ui
+    SelectRepoDir.ui
     Summary.ui
 )
 
 set(project_SRCS
     BasePage.cpp
+    EnterComment.cpp
     EZGit.cpp
+    RunGit.cpp
+    SelectBranch.cpp
+    SelectCloneDir.cpp
     SelectGit.cpp
     SelectGoal.cpp
     SelectRepo.cpp
-    SelectBranch.cpp
-    SelectSandBox.cpp
+    SelectRepoDir.cpp
     Summary.cpp
     UrlValidator.cpp
     UiStrings.cpp
@@ -27,12 +33,15 @@ set(project_SRCS
  
 set(qtproject_H
     BasePage.h
+    EnterComment.h
     EZGit.h
+    RunGit.h
+    SelectBranch.h
+    SelectCloneDir.h
     SelectGit.h
     SelectGoal.h
     SelectRepo.h
-    SelectBranch.h
-    SelectSandBox.h
+    SelectRepoDir.h
     Summary.h
     UrlValidator.h
 )

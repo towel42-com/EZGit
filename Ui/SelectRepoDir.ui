@@ -1,23 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NUi::CSelectRepo</class>
- <widget class="QWizardPage" name="NUi::CSelectRepo">
+ <class>NUi::CSelectRepoDir</class>
+ <widget class="QWizardPage" name="NUi::CSelectRepoDir">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>424</width>
-    <height>176</height>
+    <height>386</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>WizardPage</string>
   </property>
   <property name="title">
-   <string>Set the Repository URL</string>
+   <string>Select Sandbox &amp; Repository Directory</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="1">
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="repoDir"/>
+   </item>
+   <item row="1" column="0">
     <spacer name="verticalSpacer">
      <property name="orientation">
       <enum>Qt::Orientation::Vertical</enum>
@@ -30,20 +33,20 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="0" column="2">
+    <widget class="QToolButton" name="selectRepository">
      <property name="text">
-      <string>Set GIT URL:</string>
+      <string>...</string>
+     </property>
+     <property name="icon">
+      <iconset theme="QIcon::ThemeIcon::FolderNew"/>
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="repoURL"/>
-   </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QCheckBox" name="showNextTime">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Show this page every time?</string>
+      <string>Repository Directory:</string>
      </property>
     </widget>
    </item>

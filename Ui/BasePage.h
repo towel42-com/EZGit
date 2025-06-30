@@ -16,6 +16,7 @@ namespace NUi
         ~CBasePage();
 
         CEZGit *ezGit() const;
+        virtual int nextId() const override = 0;
 
     private Q_SLOTS:
     private:

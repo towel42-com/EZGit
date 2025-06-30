@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NUi::CSelectSandBox</class>
- <widget class="QWizardPage" name="NUi::CSelectSandBox">
+ <class>NUi::CSelectCloneDir</class>
+ <widget class="QWizardPage" name="NUi::CSelectCloneDir">
   <property name="geometry">
    <rect>
     <x>0</x>

@@ -19,10 +19,16 @@ namespace NUi
         fImpl->repoURL->setValidator( new CUrlValidator );
 
         registerField( QString( REPO_URL_FIELD ) + "*", fImpl->repoURL );
+        registerField( QString( SHOW_SELECT_REPO_FIELD ), fImpl->showNextTime );
     }
 
     CSelectRepo::~CSelectRepo()
     {
+    }
+
+    int CSelectRepo::nextId() const
+    {
+        return static_cast< int >( EPageID::eSelectGoal );
     }
 
 }

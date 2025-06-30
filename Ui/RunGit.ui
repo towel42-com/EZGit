@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NUi::CSummary</class>
- <widget class="QWizardPage" name="NUi::CSummary">
+ <class>NUi::CRunGit</class>
+ <widget class="QWizardPage" name="NUi::CRunGit">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,14 +11,14 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>WizardPage</string>
+   <string>Running Git Command</string>
   </property>
   <property name="title">
-   <string>Summary</string>
+   <string>Running GIT</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QPlainTextEdit" name="summary">
+    <widget class="QPlainTextEdit" name="output">
      <property name="lineWrapMode">
       <enum>QPlainTextEdit::LineWrapMode::NoWrap</enum>
      </property>

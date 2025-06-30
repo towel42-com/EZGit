@@ -2,9 +2,13 @@
 #define __EZGIT_H
 
 #include <QWizard>
+#include <QPointer>
+
+class QPlainTextEdit;
 
 namespace NUi
 {
+    class CRunGit;
     class CEZGit : public QWizard
     {
         Q_OBJECT;
@@ -13,14 +17,10 @@ namespace NUi
         CEZGit( QWidget *parent = nullptr );
 
     public:
-        std::pair< QString, bool > runGit( const QStringList &args );
-
-        virtual void accept() override;
+        void saveFields();
 
     private:
         void loadFields();
-        void saveFields();
-        void clone();
     };
 }
 

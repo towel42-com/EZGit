@@ -20,6 +20,7 @@ namespace NUi
         ~CSelectGit();
 
         virtual bool isComplete() const override;
+        virtual int nextId() const override;
 
     private Q_SLOTS:
     private:

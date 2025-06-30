@@ -1,5 +1,5 @@
-#ifndef __UI_SELECTSANDBOX_H
-#define __UI_SELECTSANDBOX_H
+#ifndef __UI_SELECTCLONEDIR_H
+#define __UI_SELECTCLONEDIR_H
 
 #include "BasePage.h"
 #include <memory>
@@ -8,16 +8,16 @@ namespace NUi
 {
     namespace Ui
     {
-        class CSelectSandBox;
+        class CSelectCloneDir;
     }
 
-    class CSelectSandBox : public CBasePage
+    class CSelectCloneDir : public CBasePage
     {
         Q_OBJECT
 
     public:
-        explicit CSelectSandBox( QWidget *parent = nullptr );
-        ~CSelectSandBox();
+        explicit CSelectCloneDir( QWidget *parent = nullptr );
+        ~CSelectCloneDir();
 
         virtual int nextId() const override;
         virtual void initializePage() override;
@@ -27,7 +27,7 @@ namespace NUi
 
     private:
     private:
-        std::unique_ptr< Ui::CSelectSandBox > fImpl;
+        std::unique_ptr< Ui::CSelectCloneDir > fImpl;
     };
 }
 #endif
