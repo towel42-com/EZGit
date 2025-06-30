@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NUi::CSelectGoal</class>
+ <widget class="QWizardPage" name="NUi::CSelectGoal">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>424</width>
+    <height>176</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>WizardPage</string>
+  </property>
+  <property name="title">
+   <string>What would you like to do?</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>What is the goal?</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="clone">
+     <property name="text">
+      <string>Create a new work area?</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="pull">
+     <property name="text">
+      <string>Update an Existing work area?</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QRadioButton" name="push">
+     <property name="text">
+      <string>Update the server with your changes?</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Orientation::Vertical</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

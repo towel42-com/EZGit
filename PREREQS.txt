@@ -1,0 +1,141 @@
+3/19/2025 - Initial version of BUILD.txt
+
+Required dependencies;
+Qt 6.8.2
+    Ninja -  https://ninja-build.org/ is a simple exe, and comes in a zip, download, extract and place in your path
+    Python 3 - https://www.python.org/downloads/windows/ - I use the python.org version but the windows store version should also work.  
+        Since its only needed for the building of Qt, Im not sure of what it really needs from python and what exact version, likely any version of Python3 will work
+        Have it "modify your path" which is done via the advanced/customize settings
+            I enable all optional features but this is likely unnecessary. 
+            I disable "free-threaded binararies" as they are experimental
+        During the Python install, at the end it "may" ask you to modify the system PATH limit, if so, run this step
+    
+        Once installed run
+        $ pip install html5lib
+        
+    
+CMake (latest is 3.31.6) https://cmake.org/download/
+    CMake is used to build Qt as well as the config tool.  I require newer functionality than Qt does.  
+    I tend to stick with the latest full release, and update to remove any warnings.
+    
+Visual Studio 2022 (I use enterprise, but pro should be fine)
+Cygwin
+    All scripts in the system will be bash and designed to run on cygwin and the supported linux distros
+
+NSIS - https://nsis.sourceforge.io/Download
+    3.11 is the latest version, install and make sure its in your path.
+
+Windows - "Any Desktop" version.  I run Win 11, however 10 (1809 or later) should be fine. 
+    Windows Server does have a delay in the Win APIs so building and/or running on Windows Server "may work" but will not be supported
+    Win 7 will not be officially supported for the same reasons.
+    
+    For now, Qt drives the OS limitations, HOWEVER with the communications we will be doing, its possible we may need to have further limitations.
+
+
+When the command line starts with a $ its is being run from cygwin/linux/bash. If the command line starts with a > its from cmd.exe
+
+1) Download and install cmake and VS using default settings
+2) Download and install cygwin
+    For now the default packages should be fine, if any other packages are necessary, this step will be updated
+3) Download Qt 6.8.2
+    https://download.qt.io/official_releases/qt/6.8/6.8.2/single/
+    Unzip the qt zip file to c:\Qt\Qt6.8.2\Src
+    
+    $ cd c:/
+    $ mkdir -p Qt\Qt6.8.2\Src
+    $ cd c:/Qt/Qt6.8.2
+    $ unzip <PATH TO qt-everywhere-src-6.8.2.zip>
+    this will create c:/Qt/qt-everywhere-src-6.8.2/
+    $ mv C:/Qt/Qt6.8.2/qt-everywhere-src-6.8.2/ c:/Qt/Qt6.8.2/Src
+    $ cd c:/Qt/Qt6.8.2/Src
+    Because we unzipped in cygwin we have to do the following
+    $ find -name \*.bat -exec chmod +x {} \;
+    
+4) Building Qt 
+    While it "CAN" be done using cygwin, dont :)
+    
+    Confirm Python, ninja and CMake are all in your path.
+    
+    Following https://doc.qt.io/qt-6/windows-building.html
+    
+
+    Note do NOT configure and build as an admin
+    Qt now uses CMake to build, the next step create an "out of source" build area for Qt in the c:\Qt\Qt6.8.2-build directory
+    If you need to re-configure, delete the build directory and re-run configure
+
+    > cd c:\Qt
+    > mkdir Qt6.8.2-build
+    > cd C:\Qt\Qt6.8.2-build
+
+    In the next step, the -debug-and-release is optional, the default is release only, but it does make it harder to debug issues with Qt
+    
+    > c:\Qt\Qt6.8.2\Src\configure.bat -prefix c:\Qt\Qt6.8.2\6.8.2 -debug-and-release
+
+    To build Qt for fixing the bluetooth issues 
+    > d:\Qt\Qt6.8.2\buildarea\Src\configure.bat  -debug-and-release -skip qtdeclarative -skip qtwebengine -skip qtquick -skip qtquick3d -skip qtgraphs -skip qtlocation -skip qtlottie -skip qtmqtt -skip qtopcua -skip qtquick3dphysics -skip qtquickeffectmaker  -skip qtvirtualkeyboard -skip qtwebview -skip qtdoc -skip qtquicktimeline -prefix d:\Qt\Qt6.8.2\6.8.2-btfix\msvc2019_64
+    
+    If you are familier with CMake, configure.bat now simply wraps the initial call to cmake to configure and generate the build area
+    
+    The configuration step can take a while (5 to 10 minutes), there will be some warnings due to using a newer CMake version than Qt uses, but these warnings do not appear to be
+    a problem.
+    
+    QDoc will not be built because special versions of clang are needed.  QDoc results for Qt are online, which is what I use anyway.
+    QtWebEngine will also not be built.  This may be needed later.  if so the build instructions will be updated
+    
+    > cd C:\Qt\Qt6.8.2-build
+    > cmake --build . --parallel
+    
+    This will take a considerable amount of time.
+    
+    To install, its not a "real install on windows" its a portable installation
+    
+    > cd C:\Qt\Qt6.8.2-build
+    > cmake --install .
+
+If you built -debug-and-release the next step to install the debug libraries of Qt as well    
+    > cmake --install . --config Debug
+    
+    Now your Qt is installed to C:\Qt\Qt6.8.2\6.8.2
+    
+    Now your C:\Qt\Qt6.8.2 directory follows a similar pattern as a pre-built directory tree direct from Qt
+
+    put C:\Qt\Qt6.8.2\6.8.2\bin in your path to build
+    
+    You can now delete the build directory.  It will be close to 100gb
+    
+
+=========================
+For clang-format
+1) Install LLVM (Latest is 18.1.8
+    https://releases.llvm.org/download.html
+2) Install python (windows version works find, dont need the cygwin version)
+    
+3) from your path, make sure python3, clang-format, and git-clang-format are all in your path
+4) from a git repo are run the command 
+    git clang-format
+    
+    it it returns "clang-format" did not modify any files, you are good to go.
+    
+If you get errors, its a cygwin/windows/git issue.
+The easiest way, add <config tool repo>/bin to your path and try again.  This dir contains a slightly modified script
+
+to format to YOUR format use the following:
+git clang-format --style=file:<path to your format file>
+
+Pre-checkin format is
+git clang-format --style=file:<root>/_clang-format
+
+copy the pre-commit hook to your hooks directory to do this automatically on checkin
+$cp <repo>/bin/pre-commit <repo>/.git/hooks
+
+
+
+
+
+        
+    
+
+       
+    
+    
+    

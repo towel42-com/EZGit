@@ -1,0 +1,71 @@
+3/19/2025 - Initial version of BUILD.txt
+
+Make sure Qt, CMake and all prerequsits are built, installed and in your path as necessary
+See PREREQS.txt
+
+Building the Pacific Volt Config Tool
+
+$ git clone https://github.com/pacificvolt/ConfigTool
+$ cd ConfigTool
+$ mkdir build
+$ cd build
+
+"Choose your build system"
+
+CMake supports multiple target build systems, the default for windows  "should" be the latest version of Visual Studio.  However,
+depending on how many versions of VS you have installed, it may not pick up the latest.
+
+For the Config Tool, the VS 2022 is the supported compiler.  If it picks a different version, then explicitly list the generator (see below)
+
+However, if you are building on linux, you may want "Unix Makefiles".  For OSX you can choose codeblocks or eclipse.
+
+For Visual Studio Code, look at https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools
+
+
+If you run cmake --help, in the list of generators, one will be marked with an asterisk, if this matches VS 2022, then you do not need to explicitly 
+set the generator.
+
+for development use, with the correct default IDE
+$ cmake .. 
+
+If you want to install the tool locally, in a portable installation manner add -DPORTABLE_INSTALL=ON
+enabling this, will create an "install" directory in parallel to the build directory
+
+$ cmake .. -DPORTABLE_INSTALL=ON
+
+if your default is incorrect use
+$ cmake .. -G "Visual Studio 17 2022" 
+
+for deployment/installer use
+$ cmake .. -G "Ninja Multi-Config"
+
+To build, open visual studio, and open the solution in the ConfigTool/build directory.
+or from the command line you can do the following:
+$ cd <buildarea>/build
+$ cmake --build . --config Debug --parallel
+
+for installing 
+
+$ cd <buildarea>/build
+$ cmake --install . --config RelWithDebInfo --parallel
+
+
+
+  
+    
+    `
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+
+       
+    
+    
+    

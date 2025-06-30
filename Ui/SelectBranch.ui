@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>NUi::CSelectBranch</class>
+ <widget class="QWizardPage" name="NUi::CSelectBranch">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>424</width>
+    <height>386</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>WizardPage</string>
+  </property>
+  <property name="title">
+   <string>Select the Branch you wish to work on:</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="1" column="0">
+    <widget class="QTreeWidget" name="branches">
+     <property name="editTriggers">
+      <set>QAbstractItemView::EditTrigger::NoEditTriggers</set>
+     </property>
+     <property name="alternatingRowColors">
+      <bool>true</bool>
+     </property>
+     <property name="rootIsDecorated">
+      <bool>false</bool>
+     </property>
+     <property name="itemsExpandable">
+      <bool>false</bool>
+     </property>
+     <property name="allColumnsShowFocus">
+      <bool>true</bool>
+     </property>
+     <property name="expandsOnDoubleClick">
+      <bool>false</bool>
+     </property>
+     <column>
+      <property name="text">
+       <string>Branch Name</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Default Branch?</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Select Branch</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLineEdit" name="selectedBranch"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
