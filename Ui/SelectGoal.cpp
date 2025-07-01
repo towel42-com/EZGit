@@ -42,10 +42,10 @@ namespace NUi
         }
         else // if ( field( PULL_GOAL_FIELD ).toBool() || field( PUSH_GOAL_FIELD ).toBool() )
         {
-            nextPage = EPageID::eSelectRepoDir;
+            nextPage = EPageID::eSelectLocalDir;
         }
 
 
-        return static_cast< int >( nextPage );
+        return toInt( nextPage );
     }
 }

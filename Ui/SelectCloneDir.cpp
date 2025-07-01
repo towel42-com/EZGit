@@ -47,7 +47,7 @@ namespace NUi
             return;
         auto dir = QDir( fImpl->sandBox->text() );
 
-        auto url = QUrl::fromUserInput( field( REPO_URL_FIELD ).toString() );
+        auto url = QUrl::fromUserInput( field( REMOTE_URL_FIELD ).toString() );
         auto sub = url.path();
         auto pos = sub.lastIndexOf( '/' );
         if ( pos != -1 )
@@ -65,6 +65,6 @@ namespace NUi
 
     int CSelectCloneDir::nextId() const
     {
-        return static_cast< int >( EPageID::eSummary );
+        return toInt( EPageID::eSummary );
     }
 }

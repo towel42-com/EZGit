@@ -25,7 +25,7 @@ namespace NUi
 
     int CEnterComment::nextId() const
     {
-        return static_cast< int >( EPageID::eSummary );
+        return toInt( EPageID::eSummary );
     }
 
 }
