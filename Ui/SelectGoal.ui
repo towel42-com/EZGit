@@ -41,7 +41,7 @@
    <item>
     <widget class="QRadioButton" name="push">
      <property name="text">
-      <string>Update the server with your changes?</string>
+      <string>Update the server with your changes in your work area?</string>
      </property>
     </widget>
    </item>
