@@ -2,17 +2,22 @@
 
 namespace NUi
 {
+    const char *SHOW_INIT_PAGES_FIELD = "showInitPages";
+    const char *SHOW_INIT_PAGES_SETTING = "ShowInitPages";
+
     const char *GIT_EXEC_FIELD = "gitExec";
     const char *GIT_EXEC_SETTING = "GitExec";
 
-    const char *SHOW_SELECT_GIT_FIELD = "showSelectGit";
-    const char *SHOW_SELECT_GIT_SETTING = "ShowSelectGit";
+    const char *REMOTE_URL_FIELD = "remoteURL";
+    const char *REMOTE_URL_SETTING = "RemoteURL";
 
-    const char *SHOW_SELECT_REPO_FIELD = "showSelectRepo";
-    const char *SHOW_SELECT_REPO_SETTING = "ShowSelectRepo";
+    const char *EMAIL_FIELD = "email";
+    const char *EMAIL_SETTING = "Email";
 
-    const char *REPO_URL_FIELD = "repoURL";
-    const char *REPO_URL_SETTING = "RepoURL";
+    const char *USERNAME_FIELD = "userName";
+    const char *USERNAME_SETTING = "UserName";
+
+    const char *PASSWORD_FIELD = "userName";
 
     const char *CLONE_GOAL_FIELD = "cloneGoal";
     const char *PULL_GOAL_FIELD = "pullGoal";

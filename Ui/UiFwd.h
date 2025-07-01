@@ -1,33 +1,45 @@
 #ifndef __UIFWD_H
 #define __UIFWD_H
 
+#include <type_traits>
 namespace NUi
 {
     enum class EPageID
     {
         eSelectGit,
-        eSelectRepo,
+        eSelectRemote,
+        eSetCredentials,
         eSelectGoal,
         eSelectBranch,
         eSelectCloneDir,
-        eSelectRepoDir,
+        eSelectLocalDir,
         eEnterComment,
         eSummary,
         eRunGit
     };
+    template< typename E = EPageID >
+    constexpr int toInt( E e ) noexcept
+    {
+        return static_cast< std::underlying_type_t< E > >( e );
+    }
 
-    extern const char *SHOW_SELECT_GIT_FIELD;
-    extern const char *SHOW_SELECT_GIT_SETTING;
-
-    extern const char *SHOW_SELECT_REPO_FIELD;
-    extern const char *SHOW_SELECT_REPO_SETTING;
+    extern const char *SHOW_INIT_PAGES_FIELD;
+    extern const char *SHOW_INIT_PAGES_SETTING;
 
     extern const char *GIT_EXEC_FIELD;
     extern const char *GIT_EXEC_SETTING;
 
-    extern const char *REPO_URL_FIELD;
-    extern const char *REPO_URL_SETTING;
+    extern const char *REMOTE_URL_FIELD;
+    extern const char *REMOTE_URL_SETTING;
 
+    extern const char *EMAIL_FIELD;
+    extern const char *EMAIL_SETTING;
+    
+    extern const char *USERNAME_FIELD;
+    extern const char *USERNAME_SETTING;
+
+    extern const char *PASSWORD_FIELD;
+    
     extern const char *CLONE_GOAL_FIELD;
     extern const char *PULL_GOAL_FIELD;
     extern const char *PUSH_GOAL_FIELD;
