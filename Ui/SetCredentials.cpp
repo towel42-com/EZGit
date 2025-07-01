@@ -29,7 +29,7 @@ namespace NUi
             fImpl->logIntoGithub, &QPushButton::clicked,
             [ this ]()   //
             {   //
-                ezGit()->runGit( { "credential-manager", "github", "login" }, true );
+                ezGit()->runGit( { "credential-manager", "github", "login" } );
                 updateCredentialsOK();
             } );
     }

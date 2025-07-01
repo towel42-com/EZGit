@@ -177,13 +177,13 @@ namespace NUi
         return retVal.first.trimmed();
     }
 
-    std::pair< QString, bool > CEZGit::runGit( const QStringList &args, bool wait ) const
+    std::pair< QString, bool > CEZGit::runGit( const QStringList &args ) const
     {
         auto gitExec = getGitExec();
         if ( gitExec.isEmpty() )
             return {};
 
-        return CRunGit::runGit( gitExec, args, wait, {} );
+        return CRunGit::runGit( gitExec, args, {} );
     }
 
 }

@@ -28,7 +28,7 @@ namespace NUi
         QString getConfigValue( const QString &key ) const;
 
     public:
-        std::pair< QString, bool > runGit( const QStringList &args, bool wait=false ) const;
+        std::pair< QString, bool > runGit( const QStringList &args ) const;
 
         QString getGitEmail() const;
         QString getGitUserName() const;

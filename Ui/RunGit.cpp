@@ -49,7 +49,7 @@ namespace NUi
     {
     }
 
-    std::pair< QString, bool > CRunGit::runGit( const QString &gitExec, const QStringList &args, bool wait, const QString &pwd )
+    std::pair< QString, bool > CRunGit::runGit( const QString &gitExec, const QStringList &args, const QString &pwd )
     {
         Q_ASSERT( !gitExec.isEmpty() );
         if ( gitExec.isEmpty() )
