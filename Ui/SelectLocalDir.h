@@ -1,5 +1,5 @@
-#ifndef __UI_SELECTREPODIR_H
-#define __UI_SELECTREPODIR_H
+#ifndef __UI_SELECTLOCALDIR_H
+#define __UI_SELECTLOCALDIR_H
 
 #include "BasePage.h"
 #include <memory>
@@ -8,16 +8,16 @@ namespace NUi
 {
     namespace Ui
     {
-        class CSelectRepoDir;
+        class CSelectLocalDir;
     }
 
-    class CSelectRepoDir : public CBasePage
+    class CSelectLocalDir : public CBasePage
     {
         Q_OBJECT
 
     public:
-        explicit CSelectRepoDir( QWidget *parent = nullptr );
-        ~CSelectRepoDir();
+        explicit CSelectLocalDir( QWidget *parent = nullptr );
+        ~CSelectLocalDir();
 
         virtual int nextId() const override;
         virtual bool isComplete() const override;
@@ -27,7 +27,7 @@ namespace NUi
     private:
         bool isGitDir( const QString &dir, bool showMessage ) const;
 
-        std::unique_ptr< Ui::CSelectRepoDir > fImpl;
+        std::unique_ptr< Ui::CSelectLocalDir > fImpl;
     };
 }
 #endif
