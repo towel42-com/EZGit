@@ -2,7 +2,6 @@
 
 #include <QApplication>
 #include <QIcon>
-#include <cstring>
 
 #include "Version.h"
 
@@ -12,11 +11,10 @@ int main( int argc, char *argv[] )
     QApplication appl( argc, argv );
 
     NVersion::setupApplication( appl, true );
-    //auto img = NUi::NUtils::getSVG( ":/resources/application.svg", { 48, 38 } );
-    //Q_ASSERT( img.has_value() );
 
-    //QIcon icon( img.value() );
-    //appl.setWindowIcon( icon );
+    QIcon icon( ":application.png" );
+    appl.setWindowIcon( icon );
+
 
     NUi::CEZGit ezGit;
     ezGit.show();
