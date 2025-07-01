@@ -1,4 +1,6 @@
-<!DOCTYPE RCC><RCC version="1.0">
-<qresource>
-</qresource>
+<RCC>
+  <qresource>
+    <file>showPassword.png</file>
+    <file>application.png</file>
+  </qresource>
 </RCC>

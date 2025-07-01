@@ -1,6 +1,2 @@
-IDI_ICON1               ICON                    "application_256x256.ico"
-IDI_ICON2               ICON                    "application_128x128.ico"
-IDI_ICON3               ICON                    "application_96x96.ico"
-IDI_ICON4               ICON                    "application_48x48.ico"
-IDI_ICON5               ICON                    "application_32x32.ico"
+IDI_ICON1               ICON                    "application.ico"
 
