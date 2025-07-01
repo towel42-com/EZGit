@@ -21,7 +21,7 @@ namespace NUi
         explicit CRunGit( QWidget *parent = nullptr );
         ~CRunGit();
 
-        static std::pair< QString, bool > runGit( const QString &gitExec, const QStringList &args, const QString &pwd = {} );
+        static std::pair< QString, bool > runGit( const QString &gitExec, const QStringList &args, bool wait, const QString &pwd );
 
         virtual int nextId() const override { return -1; }
         virtual void initializePage() override;

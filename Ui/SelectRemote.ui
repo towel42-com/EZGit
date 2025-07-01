@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NUi::CSelectRepo</class>
- <widget class="QWizardPage" name="NUi::CSelectRepo">
+ <class>NUi::CSelectRemote</class>
+ <widget class="QWizardPage" name="NUi::CSelectRemote">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -14,7 +14,7 @@
    <string>WizardPage</string>
   </property>
   <property name="title">
-   <string>Set the Repository URL</string>
+   <string>Set the GIT Repository URL</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="1">
@@ -30,20 +30,13 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Set GIT URL:</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QLineEdit" name="repoURL"/>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QCheckBox" name="showNextTime">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Show this page every time?</string>
+      <string>Set GIT Repository URL:</string>
      </property>
     </widget>
    </item>

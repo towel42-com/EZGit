@@ -49,7 +49,7 @@ namespace NUi
     {
     }
 
-    std::pair< QString, bool > CRunGit::runGit( const QString &gitExec, const QStringList &args, const QString &pwd )
+    std::pair< QString, bool > CRunGit::runGit( const QString &gitExec, const QStringList &args, bool wait, const QString &pwd )
     {
         Q_ASSERT( !gitExec.isEmpty() );
         if ( gitExec.isEmpty() )
@@ -163,7 +163,7 @@ namespace NUi
 
     void CRunGit::clone()
     {
-        auto repoUrl = field( REPO_URL_FIELD ).toString();
+        auto repoUrl = field( REMOTE_URL_FIELD ).toString();
         auto branch = field( BRANCH_FIELD ).toString();
         auto repoDir = field( SANDBOX_REPO_DIR_FIELD ).toString();
 
