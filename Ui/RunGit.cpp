@@ -192,8 +192,8 @@ namespace NUi
         auto repoDir = field( REPO_DIR_FIELD ).toString();
 
         addGitCmd( { "stash" }, repoDir, true );
-        addGitCmd( { "pull", "--recurse-submodules" }, repoDir, true );
-        addGitCmd( { "stash", "pop" }, repoDir, true );
+        addGitCmd( { "pull", "--recurse-submodules" }, repoDir, false );
+        addGitCmd( { "stash", "pop" }, repoDir, false );
     }
 
     void CRunGit::push()
