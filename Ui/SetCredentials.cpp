@@ -91,11 +91,9 @@ namespace NUi
     {
         if ( !fTextChanged )
             return true;
-        if ( fTextChanged )
-        {
-            ezGit()->runGit( { "config", "--global", "user.email", fImpl->email->text() } );
-            ezGit()->runGit( { "config", "--global", "user.name", fImpl->userName->text() } );
-        }
+        ezGit()->runGit( { "config", "--global", "user.email", fImpl->email->text() } );
+        ezGit()->runGit( { "config", "--global", "user.name", fImpl->userName->text() } );
+        return true;
     }
 
 }
