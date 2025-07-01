@@ -4,6 +4,7 @@
 //
 
 #include "SelectGit.h"
+#include "EZGit.h"
 
 #include "ui_SelectGit.h"
 
@@ -22,7 +23,7 @@ namespace NUi
         fImpl->setupUi( this );
 
         registerField( QString( GIT_EXEC_FIELD ) + "*", fImpl->git );
-        registerField( QString( SHOW_SELECT_GIT_FIELD ), fImpl->showNextTme );
+        registerField( QString( SHOW_INIT_PAGES_FIELD ), fImpl->showNextTme );
 
         connect( fImpl->git, &QLineEdit::textChanged, this, &CSelectGit::completeChanged );
 
@@ -66,9 +67,10 @@ namespace NUi
 
     int CSelectGit::nextId() const
     {
-        if ( field( SHOW_SELECT_REPO_FIELD ).toBool() )
-            return static_cast< int >( EPageID::eSelectRepo );
-        else
-            return static_cast< int >( EPageID::eSelectGoal );
+        if ( ezGit()->showSelectRemote() )
+            return toInt( EPageID::eSelectRemote );
+        else if ( ezGit()->showSetCredentials() )
+            return toInt( EPageID::eSetCredentials );
+        return toInt( EPageID::eSelectGoal );
     }
 }
