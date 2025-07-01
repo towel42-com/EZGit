@@ -5,7 +5,6 @@
 
 #include "SelectBranch.h"
 #include "EZGit.h"
-#include "RunGit.h"
 
 #include "ui_SelectBranch.h"
 
@@ -47,8 +46,7 @@ namespace NUi
 
     void CSelectBranch::loadBranches()
     {
-        auto gitExec = field( GIT_EXEC_FIELD ).toString();
-        auto results = CRunGit::runGit( gitExec, { "ls-remote", "--symref", field( REPO_URL_FIELD ).toString(), "HEAD" } );
+        auto results = ezGit()->runGit( { "ls-remote", "--symref", field( REMOTE_URL_FIELD ).toString(), "HEAD" } );
         if ( !results.second )
         {
             QMessageBox::critical( this, tr( "Error calling git" ), results.first );
@@ -67,7 +65,7 @@ namespace NUi
             defaultOID = line.mid( 0, pos1 ).trimmed();
         }
 
-        results = CRunGit::runGit( gitExec, { "ls-remote", field( REPO_URL_FIELD ).toString() } );
+        results = ezGit()->runGit( { "ls-remote", field( REMOTE_URL_FIELD ).toString() } );
         if ( !results.second )
         {
             QMessageBox::critical( this, tr( "Error calling git" ), results.first );
@@ -131,7 +129,7 @@ namespace NUi
 
     int CSelectBranch::nextId() const
     {
-        return static_cast< int >( EPageID::eSelectCloneDir );
+        return toInt( EPageID::eSelectCloneDir );
     }
 
 }
