@@ -24,6 +24,9 @@ namespace NUi
         registerField( QString( USERNAME_FIELD ) + "*", fImpl->userName );
         registerField( QString( PASSWORD_FIELD ) + "*", fImpl->password );
 
+        connect( fImpl->email, &QLineEdit::textChanged, [ this ]() { fTextChanged = true; } );
+        connect( fImpl->password, &QLineEdit::textChanged, [ this ]() { fTextChanged = true; } );
+
         connect( fImpl->showPassword, &QToolButton::clicked, [ this ]() { showPassword( fImpl->password, fImpl->showPassword ); } );
         connect(
             fImpl->logIntoGithub, &QPushButton::clicked,
@@ -81,6 +84,17 @@ namespace NUi
         if ( showButton->isChecked() )
         {
             QTimer::singleShot( 5000, showButton, &QToolButton::animateClick );
+        }
+    }
+
+    bool CSetCredentials::validatePage()
+    {
+        if ( !fTextChanged )
+            return true;
+        if ( fTextChanged )
+        {
+            ezGit()->runGit( { "config", "--global", "user.email", fImpl->email->text() } );
+            ezGit()->runGit( { "config", "--global", "user.name", fImpl->userName->text() } );
         }
     }
 
