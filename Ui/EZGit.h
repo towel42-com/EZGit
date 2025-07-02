@@ -32,13 +32,14 @@ namespace NUi
 
         QString getGitEmail() const;
         QString getGitUserName() const;
-
-    public:
+        bool confirmCredentialManager();
         void saveFields();
 
     private:
-        int getFirstPage() const;
+        EPageID getFirstPage() const;
         void loadFields();
+
+    private:
 
     private:
         static QString getProgramFiles( bool sixtyFourBit );

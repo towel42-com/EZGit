@@ -19,6 +19,7 @@
 #include <QSettings>
 #include <QStandardPaths>
 #include <QCloseEvent>
+#include <QTimer>
 #include <ShlObj_core.h>
 
 namespace NUi
@@ -46,10 +47,15 @@ namespace NUi
 
         loadFields();
 
-        setStartId( getFirstPage() );
+        auto firstPage = getFirstPage();
+        if ( firstPage != EPageID::eSelectGit )
+        {
+            confirmCredentialManager();
+        }
+        setStartId( toInt( firstPage ) );
     }
 
-    int CEZGit::getFirstPage() const
+    EPageID CEZGit::getFirstPage() const
     {
         auto firstPage = EPageID::eSelectGit;
         if ( showSelectGit() )
@@ -59,7 +65,7 @@ namespace NUi
         else if ( showSetCredentials() )
             firstPage = EPageID::eSetCredentials;
 
-        return toInt( firstPage );
+        return firstPage;
     }
 
     bool CEZGit::showSelectGit() const
@@ -121,8 +127,8 @@ namespace NUi
         setField( GIT_EXEC_FIELD, getGitExec() );
 
         setField( REMOTE_URL_FIELD, settings.value( REMOTE_URL_SETTING, "https://github.com/pacificvolt/Firmware" ) );
-        setField( EMAIL_FIELD, settings.value( EMAIL_SETTING, getGitEmail() ) );
-        setField( USERNAME_FIELD, settings.value( USERNAME_SETTING, getGitUserName() ) );
+        setField( EMAIL_FIELD, getGitEmail() );
+        setField( USERNAME_FIELD, getGitUserName() );
         setField( SANDBOX_FIELD, settings.value( SANDBOX_SETTING ) );
         setField( REPO_DIR_FIELD, settings.value( REPO_DIR_SETTING ) );
     }
@@ -134,9 +140,6 @@ namespace NUi
 
         settings.setValue( GIT_EXEC_SETTING, field( GIT_EXEC_FIELD ) );
         settings.setValue( REMOTE_URL_SETTING, field( REMOTE_URL_FIELD ) );
-        settings.setValue( EMAIL_SETTING, field( EMAIL_FIELD ) );
-        settings.setValue( USERNAME_SETTING, field( USERNAME_FIELD ) );
-
         settings.setValue( SANDBOX_SETTING, field( SANDBOX_FIELD ) );
         settings.setValue( REPO_DIR_SETTING, field( REPO_DIR_FIELD ) );
     }
@@ -170,7 +173,7 @@ namespace NUi
 
     QString CEZGit::getConfigValue( const QString &key ) const
     {
-        auto retVal = runGit( { "config", key }  );
+        auto retVal = runGit( { "config", key } );
         if ( !retVal.second )
             return {};
 
@@ -186,4 +189,28 @@ namespace NUi
         return CRunGit::runGit( gitExec, args, {} );
     }
 
+    bool CEZGit::confirmCredentialManager()
+    {
+        auto credHelper = getConfigValue( "credential.helper" );
+        if ( credHelper == "manager" )
+            return true;
+
+        auto status = runGit( { "config", "--global", "credential.helper", "manager" } );
+        if ( !status.second )
+        {
+            QMessageBox::critical( this, tr( "Could not properly set credentials" ), tr( "You must use the windows credential manager, which could not be set.\nERROR: %1" ).arg( status.first ) );
+            QTimer::singleShot( 0, this, &CEZGit::reject );
+            return false;
+        }
+
+        credHelper = getConfigValue( "credential.helper" );
+        if ( credHelper != "manager" )
+        {
+            QMessageBox::critical( this, tr( "Could not properly set credentials" ), tr( "You must use the windows credential manager, which could not be set." ) );
+            QTimer::singleShot( 0, this, &CEZGit::reject );
+            return false;
+        }
+
+        return true;
+    }
 }
