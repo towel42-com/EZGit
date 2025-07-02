@@ -12,12 +12,9 @@ namespace NUi
     const char *REMOTE_URL_SETTING = "RemoteURL";
 
     const char *EMAIL_FIELD = "email";
-    const char *EMAIL_SETTING = "Email";
-
     const char *USERNAME_FIELD = "userName";
-    const char *USERNAME_SETTING = "UserName";
+    const char *CREDENTIALS_CHANGED_FIELD = "credentialsChanged";
 
-    const char *PASSWORD_FIELD = "userName";
 
     const char *CLONE_GOAL_FIELD = "cloneGoal";
     const char *PULL_GOAL_FIELD = "pullGoal";

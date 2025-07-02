@@ -33,12 +33,8 @@ namespace NUi
     extern const char *REMOTE_URL_SETTING;
 
     extern const char *EMAIL_FIELD;
-    extern const char *EMAIL_SETTING;
-    
     extern const char *USERNAME_FIELD;
-    extern const char *USERNAME_SETTING;
-
-    extern const char *PASSWORD_FIELD;
+    extern const char *CREDENTIALS_CHANGED_FIELD;
     
     extern const char *CLONE_GOAL_FIELD;
     extern const char *PULL_GOAL_FIELD;
