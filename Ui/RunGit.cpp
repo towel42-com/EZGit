@@ -147,6 +147,12 @@ namespace NUi
             return;
 
         ezGit->saveFields();
+        if ( field( CREDENTIALS_CHANGED_FIELD ).toBool() )
+        {
+            ezGit->runGit( { "config", "--global", "user.email", field( EMAIL_FIELD ).toString() } );
+            ezGit->runGit( { "config", "--global", "user.name", field( USERNAME_FIELD ).toString() } );
+        }
+
         if ( field( CLONE_GOAL_FIELD ).toBool() )
         {
             clone();
@@ -191,7 +197,8 @@ namespace NUi
     {
         auto repoDir = field( REPO_DIR_FIELD ).toString();
 
-        addGitCmd( { "stash" }, repoDir, true );
+        addGitCmd( { "add", "." }, repoDir, true );
+        addGitCmd( { "stash" }, repoDir, false );
         addGitCmd( { "pull", "--recurse-submodules" }, repoDir, false );
         addGitCmd( { "stash", "pop" }, repoDir, false );
     }
