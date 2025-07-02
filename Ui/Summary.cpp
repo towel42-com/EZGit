@@ -15,6 +15,7 @@ namespace NUi
         fImpl( new Ui::CSummary )
     {
         fImpl->setupUi( this );
+        setCommitPage( true );
     }
 
     CSummary::~CSummary()
