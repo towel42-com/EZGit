@@ -35,6 +35,7 @@ namespace NUi
     extern const char *EMAIL_FIELD;
     extern const char *USERNAME_FIELD;
     extern const char *CREDENTIALS_CHANGED_FIELD;
+    extern const char *LOGGED_IN_USER_FIELD;
     
     extern const char *CLONE_GOAL_FIELD;
     extern const char *PULL_GOAL_FIELD;

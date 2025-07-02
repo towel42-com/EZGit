@@ -24,11 +24,12 @@ namespace NUi
 
         virtual int nextId() const override;
         virtual bool isComplete() const override;
-
+        virtual void initializePage() override;
+       
     private Q_SLOTS:
 
     private:
-        bool credentialsOK() const;
+        void loadLoggedInUser();
         bool fTextChanged{ false };
         std::unique_ptr< Ui::CSetCredentials > fImpl;
     };

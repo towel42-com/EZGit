@@ -14,6 +14,8 @@ namespace NUi
     const char *EMAIL_FIELD = "email";
     const char *USERNAME_FIELD = "userName";
     const char *CREDENTIALS_CHANGED_FIELD = "credentialsChanged";
+    const char *LOGGED_IN_USER_FIELD = "loggedInUser";
+
 
 
     const char *CLONE_GOAL_FIELD = "cloneGoal";

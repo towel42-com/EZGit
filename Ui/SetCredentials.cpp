@@ -23,6 +23,8 @@ namespace NUi
         registerField( QString( EMAIL_FIELD ) + "*", fImpl->email );
         registerField( QString( USERNAME_FIELD ) + "*", fImpl->userName );
         registerField( QString( CREDENTIALS_CHANGED_FIELD ) + "*", fImpl->credentialsChanged );
+        registerField( QString( LOGGED_IN_USER_FIELD ) + "*", fImpl->loggedInUser );
+
         fImpl->credentialsChanged->setVisible( false );
 
         connect( fImpl->email, &QLineEdit::textChanged, [ this ]() { fTextChanged = true; } );
@@ -33,7 +35,7 @@ namespace NUi
             [ this ]()   //
             {   //
                 ezGit()->runGit( { "credential-manager", "github", "login" } );
-                emit completeChanged();
+                loadLoggedInUser();
             } );
     }
 
@@ -41,10 +43,19 @@ namespace NUi
     {
     }
 
-    bool CSetCredentials::credentialsOK() const
+    void CSetCredentials::loadLoggedInUser()
     {
         auto users = ezGit()->runGit( { "credential-manager", "github", "list" } );
-        return users.second && !users.first.isEmpty();
+        if ( !users.second )
+        {
+            users.first.clear();
+        }
+        setField( LOGGED_IN_USER_FIELD, users.first );
+    }
+
+    void CSetCredentials::initializePage()
+    {
+        loadLoggedInUser();
     }
 
     int CSetCredentials::nextId() const
@@ -56,7 +67,7 @@ namespace NUi
     {
         bool complete = !field( USERNAME_FIELD ).toString().isEmpty();
         complete = complete && !field( EMAIL_FIELD ).toString().isEmpty();
-        complete = complete && credentialsOK();
+        complete = complete && !field( LOGGED_IN_USER_FIELD ).toString().isEmpty();
         return complete;
     }
 }
