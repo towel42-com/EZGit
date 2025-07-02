@@ -20,7 +20,7 @@
    <item row="4" column="0" colspan="2">
     <widget class="QRadioButton" name="push">
      <property name="text">
-      <string>Push your changes in your workarea to github?</string>
+      <string>Push your changes in your work area to github?</string>
      </property>
     </widget>
    </item>
@@ -53,7 +53,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QRadioButton" name="pull">
      <property name="text">
-      <string>Pull the latest from github to your workarea?</string>
+      <string>Pull the latest from github to your work area?</string>
      </property>
     </widget>
    </item>
