@@ -32,6 +32,7 @@ namespace NUi
 
         QString getGitEmail() const;
         QString getGitUserName() const;
+        QString getGitLoggedInName() const;
         bool confirmCredentialManager();
         void saveFields();
 

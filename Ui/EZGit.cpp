@@ -136,7 +136,7 @@ namespace NUi
     void CEZGit::saveFields()
     {
         QSettings settings;
-        settings.setValue( SHOW_INIT_PAGES_SETTING, field( SHOW_INIT_PAGES_FIELD ) );
+        settings.setValue( SHOW_INIT_PAGES_SETTING, field( SHOW_INIT_PAGES_FIELD ).toBool() || field( SHOW_INIT_PAGES_FIELD2 ).toBool() );
 
         settings.setValue( GIT_EXEC_SETTING, field( GIT_EXEC_FIELD ) );
         settings.setValue( REMOTE_URL_SETTING, field( REMOTE_URL_FIELD ) );
@@ -154,7 +154,8 @@ namespace NUi
 
     bool CEZGit::isPageComplete( EPageID pageID ) const
     {
-        auto page = dynamic_cast< CSelectRemote * >( this->page( toInt( pageID ) ) );
+        auto page = this->page( toInt( pageID ) );
+        page->initializePage();
         Q_ASSERT( page );
         if ( !page )
             return true;
@@ -169,6 +170,16 @@ namespace NUi
     QString CEZGit::getGitUserName() const
     {
         return getConfigValue( "user.name" );
+    }
+
+    QString CEZGit::getGitLoggedInName() const
+    {
+        auto users = runGit( { "credential-manager", "github", "list" } );
+        if ( !users.second )
+        {
+            users.first.clear();
+        }
+        return users.first;
     }
 
     QString CEZGit::getConfigValue( const QString &key ) const

@@ -45,16 +45,13 @@ namespace NUi
 
     void CSetCredentials::loadLoggedInUser()
     {
-        auto users = ezGit()->runGit( { "credential-manager", "github", "list" } );
-        if ( !users.second )
-        {
-            users.first.clear();
-        }
-        setField( LOGGED_IN_USER_FIELD, users.first );
+        setField( LOGGED_IN_USER_FIELD, ezGit()->getGitLoggedInName() );
     }
 
     void CSetCredentials::initializePage()
     {
+        setField( EMAIL_FIELD, ezGit()->getGitEmail() );
+        setField( USERNAME_FIELD, ezGit()->getGitUserName() );
         loadLoggedInUser();
     }
 
