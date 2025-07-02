@@ -27,6 +27,13 @@
      </property>
     </widget>
    </item>
+   <item>
+    <widget class="QCheckBox" name="showNextTime">
+     <property name="text">
+      <string>Show initialization pages next time?</string>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
  <resources/>

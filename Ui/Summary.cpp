@@ -16,6 +16,7 @@ namespace NUi
     {
         fImpl->setupUi( this );
         setCommitPage( true );
+        registerField( SHOW_INIT_PAGES_FIELD2, fImpl->showNextTime );
     }
 
     CSummary::~CSummary()
@@ -24,6 +25,8 @@ namespace NUi
 
     void CSummary::initializePage()
     {
+        setField( SHOW_INIT_PAGES_FIELD2, field( SHOW_INIT_PAGES_FIELD ) );
+
         QString summary;
         if ( field( CLONE_GOAL_FIELD ).toBool() )
         {
