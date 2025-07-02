@@ -21,8 +21,9 @@ namespace NUi
 
         virtual bool isComplete() const override;
         virtual int nextId() const override;
-
-    private Q_SLOTS:
+        virtual bool validatePage() override;
+    
+	private Q_SLOTS:
     private:
 
     private:

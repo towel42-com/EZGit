@@ -53,7 +53,7 @@
    <item row="2" column="0" colspan="3">
     <widget class="QCheckBox" name="showNextTme">
      <property name="text">
-      <string>Show this page every time?</string>
+      <string>Show initialization pages every time?</string>
      </property>
     </widget>
    </item>

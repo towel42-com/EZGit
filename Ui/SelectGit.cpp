@@ -73,4 +73,11 @@ namespace NUi
             return toInt( EPageID::eSetCredentials );
         return toInt( EPageID::eSelectGoal );
     }
+    
+    bool CSelectGit::validatePage()
+    {
+        return ezGit()->confirmCredentialManager();
+    }
+
+
 }
