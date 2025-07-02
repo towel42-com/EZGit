@@ -3,6 +3,7 @@
 namespace NUi
 {
     const char *SHOW_INIT_PAGES_FIELD = "showInitPages";
+    const char *SHOW_INIT_PAGES_FIELD2 = "showInitPages2";
     const char *SHOW_INIT_PAGES_SETTING = "ShowInitPages";
 
     const char *GIT_EXEC_FIELD = "gitExec";

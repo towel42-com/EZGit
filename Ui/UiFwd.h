@@ -24,6 +24,7 @@ namespace NUi
     }
 
     extern const char *SHOW_INIT_PAGES_FIELD;
+    extern const char *SHOW_INIT_PAGES_FIELD2;
     extern const char *SHOW_INIT_PAGES_SETTING;
 
     extern const char *GIT_EXEC_FIELD;
