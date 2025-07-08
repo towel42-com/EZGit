@@ -25,14 +25,18 @@ namespace NUi
         bool showInitPage( EPageID pageID ) const;
         bool isPageComplete( EPageID pageID ) const;
 
-        QString getConfigValue( const QString &key ) const;
+        QString getConfigValue( const QString &key );
+
+        void setRunningCmd( bool running );
 
     public:
-        std::pair< QString, bool > runGit( const QStringList &args ) const;
+        void setButtonEnabled( auto which, bool enabled );
 
-        QString getGitEmail() const;
-        QString getGitUserName() const;
-        QString getGitLoggedInName() const;
+        std::pair< QString, bool > runGit( const QStringList &args );
+
+        QString getGitEmail();
+        QString getGitUserName();
+        QString getGitLoggedInName();
         bool confirmCredentialManager();
         void saveFields();
 
@@ -43,6 +47,7 @@ namespace NUi
     private:
 
     private:
+        int fDisableCnt{ 0 };
         static QString getProgramFiles( bool sixtyFourBit );
         QString getGitExec() const;
     };

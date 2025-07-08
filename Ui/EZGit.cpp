@@ -3,7 +3,7 @@
 #include "SelectGit.h"
 #include "SelectRemote.h"
 #include "SelectGoal.h"
-#include "SelectBranch.h"
+#include "SelectBranchOrTag.h"
 #include "SelectCloneDir.h"
 #include "SelectLocalDir.h"
 #include "SetCredentials.h"
@@ -20,7 +20,9 @@
 #include <QStandardPaths>
 #include <QCloseEvent>
 #include <QTimer>
+#include <QAbstractButton>
 #include <ShlObj_core.h>
+#include <QApplication>
 
 namespace NUi
 {
@@ -32,18 +34,18 @@ namespace NUi
         setOptions( options() & ~QWizard::WizardOption::IndependentPages );
         setOptions( options() | QWizard::NoCancelButton );
 
-        addPage( new CSelectGit );
-        addPage( new CSelectRemote );
-        addPage( new CSetCredentials );
+        setPage( toInt( EPageID::eSelectGit ), new CSelectGit );
+        setPage( toInt( EPageID::eSelectRemote ), new CSelectRemote );
+        setPage( toInt( EPageID::eSetCredentials ), new CSetCredentials );
 
-        addPage( new CSelectGoal );
-        addPage( new CSelectBranch );
-        addPage( new CSelectCloneDir );
+        setPage( toInt( EPageID::eSelectGoal ), new CSelectGoal );
+        setPage( toInt( EPageID::eSelectBranch ), new CSelectBranchOrTag );
+        setPage( toInt( EPageID::eSelectCloneDir ), new CSelectCloneDir );
 
-        addPage( new CSelectLocalDir );
-        addPage( new CEnterComment );
-        addPage( new CSummary );
-        addPage( new CRunGit );
+        setPage( toInt( EPageID::eSelectLocalDir ), new CSelectLocalDir );
+        setPage( toInt( EPageID::eEnterComment ), new CEnterComment );
+        setPage( toInt( EPageID::eSummary ), new CSummary );
+        setPage( toInt( EPageID::eRunGit ), new CRunGit );
 
         loadFields();
 
@@ -57,7 +59,7 @@ namespace NUi
 
     EPageID CEZGit::getFirstPage() const
     {
-        auto firstPage = EPageID::eSelectGit;
+        auto firstPage = EPageID::eSelectGoal;
         if ( showSelectGit() )
             firstPage = EPageID::eSelectGit;
         else if ( showSelectRemote() )
@@ -155,24 +157,24 @@ namespace NUi
     bool CEZGit::isPageComplete( EPageID pageID ) const
     {
         auto page = this->page( toInt( pageID ) );
-        page->initializePage();
         Q_ASSERT( page );
         if ( !page )
             return true;
+        page->initializePage();
         return !page->isComplete();
     }
 
-    QString CEZGit::getGitEmail() const
+    QString CEZGit::getGitEmail()
     {
         return getConfigValue( "user.email" );
     }
 
-    QString CEZGit::getGitUserName() const
+    QString CEZGit::getGitUserName()
     {
         return getConfigValue( "user.name" );
     }
 
-    QString CEZGit::getGitLoggedInName() const
+    QString CEZGit::getGitLoggedInName()
     {
         auto users = runGit( { "credential-manager", "github", "list" } );
         if ( !users.second )
@@ -182,7 +184,7 @@ namespace NUi
         return users.first;
     }
 
-    QString CEZGit::getConfigValue( const QString &key ) const
+    QString CEZGit::getConfigValue( const QString &key )
     {
         auto retVal = runGit( { "config", key } );
         if ( !retVal.second )
@@ -191,13 +193,13 @@ namespace NUi
         return retVal.first.trimmed();
     }
 
-    std::pair< QString, bool > CEZGit::runGit( const QStringList &args ) const
+    std::pair< QString, bool > CEZGit::runGit( const QStringList &args )
     {
         auto gitExec = getGitExec();
         if ( gitExec.isEmpty() )
             return {};
 
-        return CRunGit::runGit( gitExec, args, {} );
+        return CRunGit::runGit( this, gitExec, args, {} );
     }
 
     bool CEZGit::confirmCredentialManager()
@@ -224,4 +226,36 @@ namespace NUi
 
         return true;
     }
+
+    void CEZGit::setRunningCmd( bool running )
+    {
+        if ( running )
+        {
+            bool first = fDisableCnt == 0;
+            fDisableCnt++;
+            if ( !first )
+                return;
+            QApplication::setOverrideCursor( Qt::WaitCursor );
+        }
+        else
+        {
+            if ( fDisableCnt == 0 )
+                return;
+            fDisableCnt--;
+            if ( fDisableCnt != 0 )
+                return;
+            QApplication::restoreOverrideCursor();
+        }
+        auto currentPage = this->currentPage();
+        setButtonEnabled( QWizard::WizardButton::FinishButton, !running );
+        setButtonEnabled( QWizard::WizardButton::CommitButton, !running );
+        setButtonEnabled( QWizard::WizardButton::NextButton, !running );
+    }
+
+    void CEZGit::setButtonEnabled( auto which, bool enabled )
+    {
+        if ( button( which ) )
+            button( which )->setEnabled( enabled );
+    }
+
 }
