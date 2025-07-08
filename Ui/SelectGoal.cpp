@@ -45,7 +45,6 @@ namespace NUi
             nextPage = EPageID::eSelectLocalDir;
         }
 
-
         return toInt( nextPage );
     }
 }
