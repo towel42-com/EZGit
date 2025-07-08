@@ -6,7 +6,7 @@ find_package(Qt6 REQUIRED COMPONENTS SerialPort Network Bluetooth Svg )
 set(qtproject_UIS
     EnterComment.ui
     RunGit.ui
-    SelectBranch.ui
+    SelectBranchOrTag.ui
     SelectCloneDir.ui
     SelectGit.ui
     SelectGoal.ui
@@ -21,7 +21,7 @@ set(project_SRCS
     EnterComment.cpp
     EZGit.cpp
     RunGit.cpp
-    SelectBranch.cpp
+    SelectBranchOrTag.cpp
     SelectCloneDir.cpp
     SelectGit.cpp
     SelectGoal.cpp
@@ -38,7 +38,7 @@ set(qtproject_H
     EnterComment.h
     EZGit.h
     RunGit.h
-    SelectBranch.h
+    SelectBranchOrTag.h
     SelectCloneDir.h
     SelectGit.h
     SelectGoal.h

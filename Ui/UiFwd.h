@@ -42,11 +42,13 @@ namespace NUi
     extern const char *PULL_GOAL_FIELD;
     extern const char *PUSH_GOAL_FIELD;
 
-    extern const char *BRANCH_FIELD;
+    extern const char *BRANCH_OR_TAG_FIELD;
+    extern const char *ISBRANCH_FIELD;
 
     extern const char *SANDBOX_FIELD;
     extern const char *SANDBOX_SETTING;
 
+   
     extern const char *REPO_DIR_FIELD;
     extern const char *SANDBOX_REPO_DIR_FIELD;
 

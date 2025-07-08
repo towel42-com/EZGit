@@ -52,7 +52,7 @@ namespace NUi
         auto pos = sub.lastIndexOf( '/' );
         if ( pos != -1 )
             sub = sub.mid( pos + 1 );
-        auto branch = field( BRANCH_FIELD ).toString();
+        auto branch = field( BRANCH_OR_TAG_FIELD ).toString();
 
         auto path = dir.absoluteFilePath( sub + "." + branch );
         fImpl->repoDir->setText( path );

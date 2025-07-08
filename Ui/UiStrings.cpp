@@ -31,7 +31,8 @@ namespace NUi
     const char *REPO_DIR_FIELD = "repoDir";
     const char *REPO_DIR_SETTING = "RepoDir";
 
-    const char *BRANCH_FIELD = "branch";
+    const char *BRANCH_OR_TAG_FIELD = "branchOrTag";
+    const char *ISBRANCH_FIELD = "isBranch";
 
     extern const char *COMMENT_FIELD = "comment";
 

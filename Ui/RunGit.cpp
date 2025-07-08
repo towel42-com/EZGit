@@ -15,9 +15,32 @@
 #include <QDir>
 #include <QMessageBox>
 #include <QTimer>
-
+#include <QFile>
+#include <QDirIterator>
 namespace NUi
 {
+    void setReadOnly( const QString &path )
+    {
+        QNtfsPermissionCheckGuard guard;
+        QFileInfo fi( path );
+        if ( fi.isDir() )
+        {
+            qDebug() << fi.absoluteFilePath();
+            QDirIterator it( path, QDir::Files | QDir::Dirs | QDir::NoDotAndDotDot | QDir::Hidden );
+            while ( it.hasNext() )
+            {
+                setReadOnly( it.next() );
+            }
+        }
+        QFile file( path );
+        auto permissions = file.permissions();
+        permissions = permissions & ( ~QFileDevice::Permission::WriteGroup );
+        permissions = permissions & ( ~QFileDevice::Permission::WriteOwner );
+        permissions = permissions & ( ~QFileDevice::Permission::WriteOther );
+        permissions = permissions & ( ~QFileDevice::Permission::WriteUser );
+        file.setPermissions( permissions );
+    }
+
     CRunGit::CRunGit( QWidget *parent ) :
         CBasePage( parent ),
         fImpl( new Ui::CRunGit ),
@@ -40,7 +63,11 @@ namespace NUi
             fProcess, &QProcess::finished,   //
             [ this ]()
             {
-                QApplication::restoreOverrideCursor();
+                if ( fCurrCmd && fCurrCmd->fPostRun )
+                {
+                    fCurrCmd->fPostRun();
+                }
+                ezGit()->setRunningCmd( false );
                 QTimer::singleShot( 0, this, &CRunGit::slotRunNextCmd );
             } );
     }
@@ -49,7 +76,17 @@ namespace NUi
     {
     }
 
-    std::pair< QString, bool > CRunGit::runGit( const QString &gitExec, const QStringList &args, const QString &pwd )
+    std::pair< QString, bool > CRunGit::runGit( CEZGit *ezGit, const QString &gitExec, const QStringList &args, const QString &pwd )
+    {
+        auto gitCmd = std::make_shared< SGitCmd >();
+        gitCmd->fArgs = args;
+        gitCmd->fPWD = pwd;
+        gitCmd->fClearFirst = true;
+        gitCmd->fWaitForFinished = true;
+        return runGit( ezGit, gitExec, gitCmd );
+    }
+
+    std::pair< QString, bool > CRunGit::runGit( CEZGit *ezGit, const QString &gitExec, std::shared_ptr< SGitCmd > gitCmd )
     {
         Q_ASSERT( !gitExec.isEmpty() );
         if ( gitExec.isEmpty() )
@@ -65,7 +102,7 @@ namespace NUi
                 outputText += outText;
             } );
 
-        auto retVal = runGit( &process, gitExec, args, pwd, true );
+        auto retVal = runGit( ezGit, &process, gitExec, gitCmd );
         if ( !retVal )
         {
             outputText += "\nERROR: " + process.errorString();
@@ -73,58 +110,84 @@ namespace NUi
         return std::make_pair( outputText, retVal );
     }
 
-    bool CRunGit::runGit( QProcess *process, const QString &gitExec, const QStringList &args, const QString &pwd, bool waitForFinished )
+    bool CRunGit::runGit( CEZGit *ezGit, QProcess *process, const QString &gitExec, std::shared_ptr< SGitCmd > gitCmd )
     {
         auto fi = QFileInfo( gitExec );
         Q_ASSERT( fi.exists() && fi.isFile() && fi.isExecutable() );
 
         QString outputText;
-        process->setWorkingDirectory( pwd );
+        process->setWorkingDirectory( gitCmd->fPWD );
         process->setProcessChannelMode( QProcess::MergedChannels );
 
-        process->start( fi.absoluteFilePath(), args );
-        QApplication::setOverrideCursor( Qt::WaitCursor );
-        if ( waitForFinished )
+        process->start( fi.absoluteFilePath(), gitCmd->fArgs );
+        ezGit->setRunningCmd( true );
+        if ( gitCmd->fWaitForFinished )
         {
             if ( !process->waitForFinished( -1 ) || ( process->error() == QProcess::FailedToStart ) )
             {
-                QApplication::restoreOverrideCursor();
+                ezGit->setRunningCmd( false );
                 return false;
             }
-            QApplication::restoreOverrideCursor();
+            ezGit->setRunningCmd( false );
+            if ( gitCmd->fPostRun )
+                gitCmd->fPostRun();
         }
 
         return true;
     }
 
-    void CRunGit::runGit( const QStringList &args, const QString &pwd, bool clearFirst )
+    void CRunGit::runGit( std::shared_ptr< SGitCmd > gitCmd )
     {
         auto gitExec = field( GIT_EXEC_FIELD ).toString();
 
-        if ( clearFirst )
+        if ( gitCmd->fClearFirst )
             fImpl->output->clear();
 
         QString cmd;
-        if ( clearFirst )
+        if ( gitCmd->fClearFirst )
             cmd = "======================================================\n";
-        cmd += "PWD: " + pwd + "\n";
-        cmd += createCmdLine( gitExec, args ) + "\n";
+        cmd += "PWD: " + gitCmd->fPWD + "\n";
+        cmd += createCmdLine( gitExec, gitCmd->fArgs ) + "\n";
         cmd += "======================================================\n";
 
         fImpl->output->appendPlainText( cmd );
 
-        if ( !runGit( fProcess, gitExec, args, pwd, false ) )
-        {
-        }
+        runGit( ezGit(), fProcess, gitExec, gitCmd );
+    }
+
+    void CRunGit::runGit( const QStringList &args, const QString &pwd, bool clearFirst )
+    {
+        auto gitCmd = std::make_shared< SGitCmd >();
+        gitCmd->fArgs = args;
+        gitCmd->fPWD = pwd;
+        gitCmd->fClearFirst = clearFirst;
+        runGit( gitCmd );
     }
 
     void CRunGit::slotRunNextCmd()
     {
+        fCurrCmd.reset();
         if ( fGitCmds.empty() )
+        {
+            QString action;
+            if ( field( CLONE_GOAL_FIELD ).toBool() )
+            {
+                action = tr( "Finished cloning local repository." );
+            }
+            else if ( field( PULL_GOAL_FIELD ).toBool() )
+            {
+                action = tr( "Finished pulling to local repository." );
+            }
+            else if ( field( PUSH_GOAL_FIELD ).toBool() )
+            {
+                action = tr( "Finished pushing to remote repository." );
+            }
+            QMessageBox::information( this, tr( "Finished" ), action );
             return;
-        auto currCmd = fGitCmds.front();
+        }
+        fCurrCmd = fGitCmds.front();
         fGitCmds.pop_front();
-        runGit( std::get< 0 >( currCmd ), std::get< 1 >( currCmd ), std::get< 2 >( currCmd ) );
+        runGit( fCurrCmd );
     }
 
     QString CRunGit::createCmdLine( const QString &gitExec, const QStringList &args ) const
@@ -172,7 +235,7 @@ namespace NUi
     void CRunGit::clone( bool clearFirst )
     {
         auto repoUrl = field( REMOTE_URL_FIELD ).toString();
-        auto branch = field( BRANCH_FIELD ).toString();
+        auto branch = field( BRANCH_OR_TAG_FIELD ).toString();
         auto repoDir = field( SANDBOX_REPO_DIR_FIELD ).toString();
 
         auto pos = repoDir.lastIndexOf( '/' );
@@ -192,7 +255,19 @@ namespace NUi
             }
         }
 
-        addGitCmd( { "clone", "--branch", branch, "--recurse-submodules", repoUrl, repoDir }, parentDirPath, clearFirst );
+        auto gitCmd = std::make_shared< SGitCmd >();
+        gitCmd->fArgs = { "clone", "--branch", branch, "--recurse-submodules", repoUrl, repoDir };
+        gitCmd->fPWD = parentDirPath;
+        gitCmd->fClearFirst = clearFirst;
+
+        if ( !field( ISBRANCH_FIELD ).toBool() )
+        {
+            gitCmd->fPostRun = [ repoDir ]()   //
+            {
+                setReadOnly( repoDir );
+            };
+        }
+        addGitCmd( gitCmd );
     }
 
     void CRunGit::pull( bool clearFirst )
@@ -215,10 +290,27 @@ namespace NUi
         addGitCmd( { "push" }, repoDir, false );
     }
 
-    void CRunGit::addGitCmd( const QStringList &args, const QString &pwd, bool clearFirst )
+    void CRunGit::addGitCmd( std::shared_ptr< SGitCmd > gitCmd )
     {
-        fGitCmds.emplace_back( args, pwd, clearFirst );
+        fGitCmds.emplace_back( gitCmd );
         if ( fGitCmds.size() == 1 )
             QTimer::singleShot( 0, this, &CRunGit::slotRunNextCmd );
+    }
+
+    void CRunGit::addGitCmd( const QStringList &args, const QString &pwd, bool clearFirst )
+    {
+        auto gitCmd = std::make_shared< SGitCmd >( args, pwd, clearFirst );
+        return addGitCmd( gitCmd );
+    }
+
+    SGitCmd::SGitCmd()
+    {
+    }
+
+    SGitCmd::SGitCmd( const QStringList &args, const QString &pwd, bool clearFirst ) :
+        fArgs( args ),
+        fPWD( pwd ),
+        fClearFirst( clearFirst )
+    {
     }
 }
