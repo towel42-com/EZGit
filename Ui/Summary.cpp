@@ -31,15 +31,16 @@ namespace NUi
         if ( field( CLONE_GOAL_FIELD ).toBool() )
         {
             auto repoUrl = field( REMOTE_URL_FIELD ).toString();
-            auto branch = field( BRANCH_OR_TAG_FIELD ).toString();
+            auto name = field( BRANCH_OR_TAG_FIELD ).toString();
             auto repoDir = field( SANDBOX_REPO_DIR_FIELD ).toString();
             auto isBranch = field( ISBRANCH_FIELD ).toBool();
             summary += tr( "Cloning repository '<b>%1</b>'<br><ul><li>%4: '<b>%2</b>'</li><br>to<br><li> Directory: '<b>%3</b>'</li></ul>" )   //
                            .arg( repoUrl )   //
-                           .arg( branch )   //
+                           .arg( name )   //
                            .arg( repoDir )
                            .arg( isBranch ? tr( "Branch" ) : tr( "Tag" ) );
-                ;
+            if ( !isBranch )
+                summary += tr( "<br/><b>The work area will be read only.</b>" );
         }
         else if ( field( PULL_GOAL_FIELD ).toBool() )
         {
