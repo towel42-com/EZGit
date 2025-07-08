@@ -147,27 +147,29 @@ namespace NUi
             return;
 
         ezGit->saveFields();
+        bool firstCmd = true;
         if ( field( CREDENTIALS_CHANGED_FIELD ).toBool() )
         {
-            ezGit->runGit( { "config", "--global", "user.email", field( EMAIL_FIELD ).toString() } );
-            ezGit->runGit( { "config", "--global", "user.name", field( USERNAME_FIELD ).toString() } );
+            firstCmd = false;
+            runGit( { "config", "--global", "user.email", field( EMAIL_FIELD ).toString() }, {}, true );
+            runGit( { "config", "--global", "user.name", field( USERNAME_FIELD ).toString() }, {}, false );
         }
 
         if ( field( CLONE_GOAL_FIELD ).toBool() )
         {
-            clone();
+            clone( firstCmd );
         }
         else if ( field( PULL_GOAL_FIELD ).toBool() )
         {
-            pull();
+            pull( firstCmd );
         }
         else if ( field( PUSH_GOAL_FIELD ).toBool() )
         {
-            push();
+            push( firstCmd );
         }
     }
 
-    void CRunGit::clone()
+    void CRunGit::clone( bool clearFirst )
     {
         auto repoUrl = field( REMOTE_URL_FIELD ).toString();
         auto branch = field( BRANCH_FIELD ).toString();
@@ -190,25 +192,25 @@ namespace NUi
             }
         }
 
-        addGitCmd( { "clone", "--branch", branch, "--recurse-submodules", repoUrl, repoDir }, parentDirPath, true );
+        addGitCmd( { "clone", "--branch", branch, "--recurse-submodules", repoUrl, repoDir }, parentDirPath, clearFirst );
     }
 
-    void CRunGit::pull()
+    void CRunGit::pull( bool clearFirst )
     {
         auto repoDir = field( REPO_DIR_FIELD ).toString();
 
-        addGitCmd( { "add", "." }, repoDir, true );
+        addGitCmd( { "add", "." }, repoDir, clearFirst );
         addGitCmd( { "stash" }, repoDir, false );
         addGitCmd( { "pull", "--recurse-submodules" }, repoDir, false );
         addGitCmd( { "stash", "pop" }, repoDir, false );
     }
 
-    void CRunGit::push()
+    void CRunGit::push( bool clearFirst )
     {
         auto repoDir = field( REPO_DIR_FIELD ).toString();
         auto comment = field( COMMENT_FIELD ).toString();
 
-        addGitCmd( { "add", "." }, repoDir, true );
+        addGitCmd( { "add", "." }, repoDir, clearFirst );
         addGitCmd( { "commit", "-a", "-m", comment }, repoDir, false );
         addGitCmd( { "push" }, repoDir, false );
     }

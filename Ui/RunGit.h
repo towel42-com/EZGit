@@ -37,9 +37,9 @@ namespace NUi
         static bool runGit( QProcess *process, const QString &gitExec, const QStringList &args, const QString &pwd, bool waitForFinished );
         void runGit( const QStringList &args, const QString &pwd, bool clearFirst );
 
-        void clone();
-        void pull();
-        void push();
+        void clone( bool clearFirst );
+        void pull( bool clearFirst );
+        void push( bool clearFirst );
         std::unique_ptr< Ui::CRunGit > fImpl;
         QProcess *fProcess{ nullptr };
 
