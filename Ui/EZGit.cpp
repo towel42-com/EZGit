@@ -55,6 +55,7 @@ namespace NUi
             confirmCredentialManager();
         }
         setStartId( toInt( firstPage ) );
+        setButtonText( QWizard::CommitButton, tr( "Execute" ) );
     }
 
     EPageID CEZGit::getFirstPage() const
