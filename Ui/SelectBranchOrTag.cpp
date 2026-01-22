@@ -181,7 +181,7 @@ namespace NUi
         item->setText( 0, fName );
         if ( fIsBranch && fIsDefaultBranch )
             item->setText( 1, "Yes" );
-        item->setText( 2, fIsBranch ? "Branch" : "Tag" );
+        item->setText( 2, fIsBranch ? QStringLiteral( "Branch" ) : QStringLiteral( "Tag" ) );
         item->setSelected( true );
         return item;
     }

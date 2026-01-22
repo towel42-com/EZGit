@@ -56,7 +56,7 @@ namespace NUi
             [ this ]()
             {
                 auto outText = fProcess->readAllStandardOutput();
-                fImpl->output->appendPlainText( outText );
+                fImpl->output->appendPlainText( QString::fromUtf8( outText ) );
             } );
 
         connect(

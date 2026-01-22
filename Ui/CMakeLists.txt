@@ -6,7 +6,6 @@ find_package(Deploy REQUIRED)
 include( ${CMAKE_CURRENT_LIST_DIR}/include.cmake )
 project( ${_PROJECT_NAME} )
 IncludeProjectSettings()
-
 add_library( ${PROJECT_NAME}  
                 ${_PROJECT_DEPENDENCIES} 
                 ${_CMAKE_MODULE_FILES}
@@ -15,7 +14,11 @@ add_library( ${PROJECT_NAME}
 set_target_properties( ${PROJECT_NAME} PROPERTIES FOLDER ${FOLDER_NAME} 
                                     )
 
-target_include_directories( ${PROJECT_NAME} PUBLIC ${_PROJECT_INCLUDE_DIRECTORIES} ${CMAKE_SOURCE_DIR}/qhexedit2/src )
+target_include_directories( ${PROJECT_NAME} 
+    PUBLIC 
+        ${_PROJECT_INCLUDE_DIRECTORIES} 
+        ${CMAKE_BINARY_DIR}
+)
 
 target_link_libraries( ${PROJECT_NAME}
     PUBLIC

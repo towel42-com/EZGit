@@ -1,39 +1,39 @@
 #include "UiFwd.h"
-
+#include <QString>
 namespace NUi
 {
-    const char *SHOW_INIT_PAGES_FIELD = "showInitPages";
-    const char *SHOW_INIT_PAGES_FIELD2 = "showInitPages2";
-    const char *SHOW_INIT_PAGES_SETTING = "ShowInitPages";
+    auto SHOW_INIT_PAGES_FIELD = QStringLiteral( "showInitPages" );
+    auto SHOW_INIT_PAGES_FIELD2 = QStringLiteral( "showInitPages2" );
+    auto SHOW_INIT_PAGES_SETTING = QStringLiteral( "ShowInitPages" );
 
-    const char *GIT_EXEC_FIELD = "gitExec";
-    const char *GIT_EXEC_SETTING = "GitExec";
+    auto GIT_EXEC_FIELD = QStringLiteral( "gitExec" );
+    auto GIT_EXEC_SETTING = QStringLiteral( "GitExec" );
 
-    const char *REMOTE_URL_FIELD = "remoteURL";
-    const char *REMOTE_URL_SETTING = "RemoteURL";
+    auto REMOTE_URL_FIELD = QStringLiteral( "remoteURL" );
+    auto REMOTE_URL_SETTING = QStringLiteral( "RemoteURL" );
 
-    const char *EMAIL_FIELD = "email";
-    const char *USERNAME_FIELD = "userName";
-    const char *CREDENTIALS_CHANGED_FIELD = "credentialsChanged";
-    const char *LOGGED_IN_USER_FIELD = "loggedInUser";
+    auto EMAIL_FIELD = QStringLiteral( "email" );
+    auto USERNAME_FIELD = QStringLiteral( "userName" );
+    auto CREDENTIALS_CHANGED_FIELD = QStringLiteral( "credentialsChanged" );
+    auto LOGGED_IN_USER_FIELD = QStringLiteral( "loggedInUser" );
 
 
 
-    const char *CLONE_GOAL_FIELD = "cloneGoal";
-    const char *PULL_GOAL_FIELD = "pullGoal";
-    const char *PUSH_GOAL_FIELD = "pushGoal";
+    auto CLONE_GOAL_FIELD = QStringLiteral( "cloneGoal" );
+    auto PULL_GOAL_FIELD = QStringLiteral( "pullGoal" );
+    auto PUSH_GOAL_FIELD = QStringLiteral( "pushGoal" );
 
-    const char *SANDBOX_FIELD = "sandBox";
-    const char *SANDBOX_SETTING = "SandBox";
+    auto SANDBOX_FIELD = QStringLiteral( "sandBox" );
+    auto SANDBOX_SETTING = QStringLiteral( "SandBox" );
 
-    const char *SANDBOX_REPO_DIR_FIELD = "sandBoxRepoDir";
+    auto SANDBOX_REPO_DIR_FIELD = QStringLiteral( "sandBoxRepoDir" );
 
-    const char *REPO_DIR_FIELD = "repoDir";
-    const char *REPO_DIR_SETTING = "RepoDir";
+    auto REPO_DIR_FIELD = QStringLiteral( "repoDir" );
+    auto REPO_DIR_SETTING = QStringLiteral( "RepoDir" );
 
-    const char *BRANCH_OR_TAG_FIELD = "branchOrTag";
-    const char *ISBRANCH_FIELD = "isBranch";
+    auto BRANCH_OR_TAG_FIELD = QStringLiteral( "branchOrTag" );
+    auto ISBRANCH_FIELD = QStringLiteral( "isBranch" );
 
-    extern const char *COMMENT_FIELD = "comment";
+    extern auto COMMENT_FIELD = QStringLiteral( "comment" );
 
 }

@@ -9,6 +9,7 @@
 #include "SetCredentials.h"
 #include "Summary.h"
 #include "EnterComment.h"
+#include "Version.h"
 
 #include "UiFwd.h"
 
@@ -23,12 +24,16 @@
 #include <QAbstractButton>
 #include <ShlObj_core.h>
 #include <QApplication>
+#include <QFontMetrics>
 
 namespace NUi
 {
     CEZGit::CEZGit( QWidget *parent ) :
         QWizard( parent )
     {
+        auto title = NVersion::getWindowTitle( true, false );
+        setWindowTitle( title );
+
         setDefaultProperty( QTreeWidget::staticMetaObject.className(), "currentItem", SIGNAL( currentItemChanged( QTreeWidgetItem *, QTreeWidgetItem * ) ) );
         setDefaultProperty( QPlainTextEdit::staticMetaObject.className(), "plainText", SIGNAL( textChanged() ) );
         setOptions( options() & ~QWizard::WizardOption::IndependentPages );
@@ -253,7 +258,7 @@ namespace NUi
         setButtonEnabled( QWizard::WizardButton::NextButton, !running );
     }
 
-    void CEZGit::setButtonEnabled( auto which, bool enabled )
+    void CEZGit::setButtonEnabled( QWizard::WizardButton which, bool enabled )
     {
         if ( button( which ) )
             button( which )->setEnabled( enabled );

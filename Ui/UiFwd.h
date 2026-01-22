@@ -2,6 +2,7 @@
 #define __UIFWD_H
 
 #include <type_traits>
+#include <QString>
 namespace NUi
 {
     enum class EPageID
@@ -23,38 +24,38 @@ namespace NUi
         return static_cast< std::underlying_type_t< E > >( e );
     }
 
-    extern const char *SHOW_INIT_PAGES_FIELD;
-    extern const char *SHOW_INIT_PAGES_FIELD2;
-    extern const char *SHOW_INIT_PAGES_SETTING;
+    extern QString SHOW_INIT_PAGES_FIELD;
+    extern QString SHOW_INIT_PAGES_FIELD2;
+    extern QString SHOW_INIT_PAGES_SETTING;
 
-    extern const char *GIT_EXEC_FIELD;
-    extern const char *GIT_EXEC_SETTING;
+    extern QString GIT_EXEC_FIELD;
+    extern QString GIT_EXEC_SETTING;
 
-    extern const char *REMOTE_URL_FIELD;
-    extern const char *REMOTE_URL_SETTING;
+    extern QString REMOTE_URL_FIELD;
+    extern QString REMOTE_URL_SETTING;
 
-    extern const char *EMAIL_FIELD;
-    extern const char *USERNAME_FIELD;
-    extern const char *CREDENTIALS_CHANGED_FIELD;
-    extern const char *LOGGED_IN_USER_FIELD;
+    extern QString EMAIL_FIELD;
+    extern QString USERNAME_FIELD;
+    extern QString CREDENTIALS_CHANGED_FIELD;
+    extern QString LOGGED_IN_USER_FIELD;
     
-    extern const char *CLONE_GOAL_FIELD;
-    extern const char *PULL_GOAL_FIELD;
-    extern const char *PUSH_GOAL_FIELD;
+    extern QString CLONE_GOAL_FIELD;
+    extern QString PULL_GOAL_FIELD;
+    extern QString PUSH_GOAL_FIELD;
 
-    extern const char *BRANCH_OR_TAG_FIELD;
-    extern const char *ISBRANCH_FIELD;
+    extern QString BRANCH_OR_TAG_FIELD;
+    extern QString ISBRANCH_FIELD;
 
-    extern const char *SANDBOX_FIELD;
-    extern const char *SANDBOX_SETTING;
+    extern QString SANDBOX_FIELD;
+    extern QString SANDBOX_SETTING;
 
    
-    extern const char *REPO_DIR_FIELD;
-    extern const char *SANDBOX_REPO_DIR_FIELD;
+    extern QString REPO_DIR_FIELD;
+    extern QString SANDBOX_REPO_DIR_FIELD;
 
-    extern const char *REPO_DIR_SETTING;
+    extern QString REPO_DIR_SETTING;
 
-    extern const char *COMMENT_FIELD;
+    extern QString COMMENT_FIELD;
 }
 
 #endif

@@ -30,7 +30,7 @@ namespace NUi
         void setRunningCmd( bool running );
 
     public:
-        void setButtonEnabled( auto which, bool enabled );
+        void setButtonEnabled( QWizard::WizardButton which, bool enabled );
 
         std::pair< QString, bool > runGit( const QStringList &args );
 
