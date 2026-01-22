@@ -12,7 +12,7 @@ int main( int argc, char *argv[] )
 
     NVersion::setupApplication( appl, true );
 
-    QIcon icon( ":application.png" );
+    QIcon icon( QStringLiteral( ":application.png" ) );
     appl.setWindowIcon( icon );
 
 
